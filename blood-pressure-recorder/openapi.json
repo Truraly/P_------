@@ -1,0 +1,288 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "blood-pressure-recorder",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/records": {
+      "post": {
+        "summary": "新增血压记录",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "high": {
+                    "type": "integer",
+                    "title": "上压"
+                  },
+                  "low": {
+                    "type": "integer",
+                    "title": "下压"
+                  },
+                  "heartRate": {
+                    "type": "integer",
+                    "title": "心率"
+                  },
+                  "remark": {
+                    "type": "string",
+                    "title": "备注"
+                  },
+                  "location": {
+                    "type": "string",
+                    "title": "位置"
+                  }
+                },
+                "x-apifox-orders": [
+                  "high",
+                  "low",
+                  "heartRate",
+                  "remark",
+                  "location"
+                ],
+                "required": [
+                  "high",
+                  "low",
+                  "heartRate",
+                  "location"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4323985/apis/api-164592836-run",
+        "security": []
+      }
+    },
+    "/records/after/{timestamp}": {
+      "get": {
+        "summary": "获取某timestamp之后的血压记录",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "timestamp",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "123",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4323985/apis/api-164593530-run",
+        "security": []
+      }
+    },
+    "/records/latest/{count}": {
+      "get": {
+        "summary": "获取前x条血压记录",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "count",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "3",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4323985/apis/api-164593538-run",
+        "security": []
+      }
+    },
+    "/records/{timestamp}": {
+      "put": {
+        "summary": " 修改血压记录",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "timestamp",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "high": {
+                    "type": "integer",
+                    "title": "上压"
+                  },
+                  "low": {
+                    "type": "integer",
+                    "title": "下压"
+                  },
+                  "heartRate": {
+                    "type": "integer",
+                    "title": "心率"
+                  },
+                  "remark": {
+                    "type": "string",
+                    "title": "备注"
+                  },
+                  "location": {
+                    "type": "string",
+                    "title": "位置"
+                  }
+                },
+                "x-apifox-orders": [
+                  "high",
+                  "low",
+                  "heartRate",
+                  "remark",
+                  "location"
+                ],
+                "required": [
+                  "high",
+                  "low",
+                  "heartRate",
+                  "location"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4323985/apis/api-164593854-run",
+        "security": []
+      }
+    },
+    "/records/{id}": {
+      "delete": {
+        "summary": "删除血压记录",
+        "x-apifox-folder": "",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4323985/apis/api-164593958-run",
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  },
+  "servers": []
+}
