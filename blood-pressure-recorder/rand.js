@@ -32,7 +32,7 @@ for (let i = 0; i < 1000; i++) {
   data.month = date.getMonth() + 1;
   data.day = date.getDate();
   data.hour = date.getHours();
-  data.remark = "";
+  data.remark = "1";
   data.location = ["左手", "右手", "其他"][Math.floor(Math.random() * 3)];
   data.device =
     "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0";

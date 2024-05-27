@@ -18,7 +18,7 @@ express + Vue + ElementUI + Echarts 的血压健康记录工具
 ### 开发环境
 
 1. 编程语言：个人血压健康管理系统使用 Java 编程语言进行开发。
-2. 数据库：个人血压健康管理系统需要历史血压数据，本系统采用 SQLite 数据库来存储数据。
+2. 数据库：个人血压健康管理系统需要历史血压数据，本系统采用 MySQL 数据库来存储数据。
 3. 操作系统：本系统是在 Ubuntu22 操作系统上进行开发运行的。
 
 ### 工具介绍
@@ -132,131 +132,40 @@ Vscode 全称 Visual Studio Code ， 是一款免费的、轻量级且可扩展�
 
 ### 数据库设计
 
-> 不允许空值
-
 家庭成员表
 
-| 字段名              | 描述                   | 类型                     | 备注                                               |
-| ------------------- | ---------------------- | ------------------------ | -------------------------------------------------- |
-| id                  | 用户 ID                | Integer                  | 主键，顺序增长                                     |
-| name                | 名称                   | String                   |                                                    |
-| hasExtraRiskFactors | 是否存在额外的风险因素 | Boolean（default false） | （伴临床合并症、靶器官损害或 ≥3 个心血管危险因素） |
-| isDeleted           | 伪删除                 | Boolean（default false） |                                                    |
+- id（顺序增长）
+- 名称
+- 是否存在伴临床合并症、靶器官损害或 ≥3 个心血管危险因素（默认为否，Boolean）
 
 血压记录表
 
-| 字段名                         | 描述                           | 类型    | 备注                                                      |
-| ------------------------------ | ------------------------------ | ------- | --------------------------------------------------------- |
-| id                             | 记录 ID                        | Integer | 主键，=rid_timestemp                                      |
-| familyMemberId                 | 家庭成员 ID                    | Integer | 外键，关联家庭成员表                                      |
-| SBP                            | 收缩压                         | Integer |                                                           |
-| DBP                            | 舒张压                         | Integer |                                                           |
-| heartRate                      | 心率                           | Integer |                                                           |
-| timestamp                      | 时间                           | Long    |                                                           |
-| remark                         | 备注                           | String  |                                                           |
-| location                       | 位置                           | String  | `right hand \| left hand \| other` 若为`other` 则需要备注 |
-| intenseExerciseWithin30min     | 测量前 30min 是否剧烈运动      | Boolean |                                                           |
-| sitBeforeMeasurement           | 测量血压前安静休息 3~5 min     | Boolean |                                                           |
-| showerWithin1h                 | 测量前 1h 是否洗澡             | Boolean |                                                           |
-| alcoholSmokingCaffeineWithin1h | 测量前 1h 是否饮酒/吸烟/咖啡因 | Boolean |                                                           |
-| mealWithin1h                   | 测量前 1h 是否用餐             | Boolean |                                                           |
-| emptyBladderBeforeMeasurement  | 测量前是否排空膀胱             | Boolean |                                                           |
-| properPostureDuringMeasurement | 测量坐姿是否端正               | Boolean |                                                           |
-| isDeleted                      | 伪删除                         | Boolean |                                                           |
+- 记录 id（rid_timestemp）
+- 家庭成员 id
+- SBP 收缩压
+- DBP 舒张压
+- heartRate 心率
+- timestamp 时间
+- remark 备注
+- location 位置 right hand | left hand | other
+- intenseExerciseWithin30min 测量前 30min 是否剧烈运动 (Boolean)
+- showerWithin1h 测量前 1h 是否洗澡 (Boolean)
+- alcoholSmokingCaffeineWithin1h 测量前 1h 是否饮酒/吸烟/咖啡因 (Boolean)
+- mealWithin1h 测量前 1h 是否用餐 (Boolean)
+- emptyBladderBeforeMeasurement 测量前是否排空膀胱 (Boolean)
+- properPostureDuringMeasurement 测量坐姿是否端正 (Boolean)
 
 ## 详细设计
 
-详细见 apifox
-
-### 用户管理模块
+#### 用户管理模块
 
 用户可以 CRUD 家庭成员信息
 
-前端设计：
 
-用户在首页可以选择家庭成员（用于增删查改血压记录）
-
-有单独的一页用于管理家庭成员
-
-接口设计：
-
-`/familyMember`
-
-- 用户可以查看家庭成员列表，获取全部信息
-- 用户可以添加家庭成员
-- 用户可以修改家庭成员信息（名称，是否存在额外的风险因素）
-- 用户可以删除家庭成员（伪删除）
-
-### 血压记录模块
-
-选择对应的家庭成员，CRUD 血压记录
-
-前端设计：
-
-使用 Element 的下拉抽屉输入血压记录信息
-
-用户在设置界面可以设置默认的测量条件
-
-首页选择的家庭成员就是当前的测量的家庭成员
-
-有 2 种模式
-
-1. 正常模式：用户输入血压记录
-2. 修改模式：用户修改血压记录（需要记录的 id）
-
-Vue 组件调用的时候需要传入记录对象和模式类型
-
-接口设计：
-
-`/bloodPressureRecord`
-
-- 用户可以通过简单的条件筛选，获取血压记录
-  - 家庭成员 id
-  - 时间范围（xxxx 至今）
-  - 前 x 条记录
-- 用户可以添加血压记录
-- 用户可以修改血压记录
-- 用户可以删除血压记录
-- 用户可以获取/修改默认的测量条件
-
-### 数据分析展示模块
-
-- 首页展板
-  - 数据计算，展示
-  - 数据导出模块：支持导出数据（文件或者图片）
-- 记录列表
-
-前端设计：
-
-首页展示一个页面，展示用户最近的血压记录，分析状况，以及趋势
-
-- 近 3 日 健康指标 及其可信度
-- 近 7 日 健康指标 及其可信度
-- 近 7 日 每日数据指标
-
-用户可以导出数据，支持导出 json 格式的文件
-
-单独一页查看记录列表，可以按时间查看记录，可以修改/删除记录
-
-接口设计：
-
-获取记录部分使用血压记录模块的接口
-
-`/bloodPressureRecord`
-
-每日数据指标计算部分
-
-- 取每日
-
-健康指标计算部分
-
-### 健康建议模块
-
-前端设计，展示一个页面，展示降血压的建议
-
-纯粹前端设计，不需要后端接口
 
 ## 功能设计
+
+
 
 - 自动对相距 10 分钟内的数据进行平均值计算
 - 忽略心率>85 的数据
@@ -276,6 +185,29 @@ Vue 组件调用的时候需要传入记录对象和模式类型
 
 由一个定期维护的 json 文件来维护数据
 
+```json
+{
+  "records": [
+    {
+      "high": 120,
+      "low": 80,
+      "heartRate": 60,
+      "time": 1620000000,
+      "remark": "早上测量",
+      "location": "right"
+    },
+    {
+      "high": 120,
+      "low": 80,
+      "heartRate": 60,
+      "time": 1620000100,
+      "remark": "晚上测量",
+      "location": "right"
+    }
+  ]
+}
+```
+
 - 主页
   - 今日平均最高血压/最低血压/心率 距离目标的差值
   - 近 3 日平均最高血压/最低血压/心率 距离目标的差值
@@ -294,8 +226,6 @@ Vue 组件调用的时候需要传入记录对象和模式类型
 - 删除血压记录
 
 ## TODO
-
-- [ ] 月度趋势（按年分页）
 
 - [ ] 添加记录吃饭，睡觉时间的功能
 - [ ] 重新构建突变渲染的逻辑和展示

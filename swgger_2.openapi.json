@@ -1,0 +1,370 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "血压记录",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "血压记录模块"
+    }
+  ],
+  "paths": {
+    "/bloodPressureRecord": {
+      "get": {
+        "summary": "获取血压记录",
+        "x-apifox-folder": "血压记录模块",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "血压记录模块"
+        ],
+        "parameters": [
+          {
+            "name": "familyMemberID",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取血压记录",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BloodPressureRecord"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4457817/apis/api-172253483-run",
+        "security": []
+      },
+      "post": {
+        "summary": "添加血压记录",
+        "x-apifox-folder": "血压记录模块",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "血压记录模块"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BloodPressureRecordInput"
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "血压记录添加成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4457817/apis/api-172253484-run",
+        "security": []
+      }
+    },
+    "/bloodPressureRecord/{recordID}": {
+      "put": {
+        "summary": "修改血压记录",
+        "x-apifox-folder": "血压记录模块",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "血压记录模块"
+        ],
+        "parameters": [
+          {
+            "name": "recordID",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BloodPressureRecordInput"
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "血压记录修改成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4457817/apis/api-172253485-run",
+        "security": []
+      },
+      "delete": {
+        "summary": "删除血压记录",
+        "x-apifox-folder": "血压记录模块",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "血压记录模块"
+        ],
+        "parameters": [
+          {
+            "name": "recordID",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "血压记录删除成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4457817/apis/api-172253486-run",
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BloodPressureRecordInput": {
+        "type": "object",
+        "properties": {
+          "familyMemberID": {
+            "type": "integer",
+            "format": "int64",
+            "description": "家庭成员ID"
+          },
+          "SBP": {
+            "type": "integer",
+            "description": "收缩压"
+          },
+          "DBP": {
+            "type": "integer",
+            "description": "舒张压"
+          },
+          "heartRate": {
+            "type": "integer",
+            "description": "心率"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间戳"
+          },
+          "remark": {
+            "type": "string",
+            "description": "备注"
+          },
+          "location": {
+            "type": "string",
+            "description": "测量位置"
+          },
+          "intenseExerciseWithin30min": {
+            "type": "boolean",
+            "description": "测量前30分钟是否剧烈运动"
+          },
+          "showerWithin1h": {
+            "type": "boolean",
+            "description": "测量前1小时是否洗澡"
+          },
+          "alcoholSmokingCaffeineWithin1h": {
+            "type": "boolean",
+            "description": "测量前1小时是否饮酒/吸烟/咖啡因"
+          },
+          "mealWithin1h": {
+            "type": "boolean",
+            "description": "测量前1小时是否用餐"
+          },
+          "emptyBladderBeforeMeasurement": {
+            "type": "boolean",
+            "description": "测量前是否排空膀胱"
+          },
+          "properPostureDuringMeasurement": {
+            "type": "boolean",
+            "description": "测量坐姿是否端正"
+          }
+        },
+        "x-apifox-orders": [
+          "familyMemberID",
+          "SBP",
+          "DBP",
+          "heartRate",
+          "timestamp",
+          "remark",
+          "location",
+          "intenseExerciseWithin30min",
+          "showerWithin1h",
+          "alcoholSmokingCaffeineWithin1h",
+          "mealWithin1h",
+          "emptyBladderBeforeMeasurement",
+          "properPostureDuringMeasurement"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "Schemas"
+      },
+      "BloodPressureRecord": {
+        "type": "object",
+        "properties": {
+          "recordID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "familyMemberID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "SBP": {
+            "type": "integer",
+            "description": "收缩压"
+          },
+          "DBP": {
+            "type": "integer",
+            "description": "舒张压"
+          },
+          "heartRate": {
+            "type": "integer",
+            "description": "心率"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间戳"
+          },
+          "remark": {
+            "type": "string",
+            "description": "备注"
+          },
+          "location": {
+            "type": "string",
+            "description": "测量位置"
+          },
+          "intenseExerciseWithin30min": {
+            "type": "boolean",
+            "description": "测量前30分钟是否剧烈运动"
+          },
+          "showerWithin1h": {
+            "type": "boolean",
+            "description": "测量前1小时是否洗澡"
+          },
+          "alcoholSmokingCaffeineWithin1h": {
+            "type": "boolean",
+            "description": "测量前1小时是否饮酒/吸烟/咖啡因"
+          },
+          "mealWithin1h": {
+            "type": "boolean",
+            "description": "测量前1小时是否用餐"
+          },
+          "emptyBladderBeforeMeasurement": {
+            "type": "boolean",
+            "description": "测量前是否排空膀胱"
+          },
+          "properPostureDuringMeasurement": {
+            "type": "boolean",
+            "description": "测量坐姿是否端正"
+          }
+        },
+        "x-apifox-orders": [
+          "recordID",
+          "familyMemberID",
+          "SBP",
+          "DBP",
+          "heartRate",
+          "timestamp",
+          "remark",
+          "location",
+          "intenseExerciseWithin30min",
+          "showerWithin1h",
+          "alcoholSmokingCaffeineWithin1h",
+          "mealWithin1h",
+          "emptyBladderBeforeMeasurement",
+          "properPostureDuringMeasurement"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "Schemas"
+      }
+    },
+    "securitySchemes": {}
+  },
+  "servers": []
+}
