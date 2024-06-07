@@ -47,6 +47,8 @@ function saveData(data) {
 
 // 新增血压记录
 app.post("/records", (req, res) => {
+  //   console.time("/records");
+
   const { high, low, heartRate, remark, location } = req.body;
   const time = Date.now();
   const year = new Date().getFullYear();
@@ -57,7 +59,11 @@ app.post("/records", (req, res) => {
   if (!high || !low || !heartRate || !location) {
     return res.status(400).send({ message: "Invalid data" });
   }
-  if (typeof high !== "number" || typeof low !== "number" || typeof heartRate !== "number") {
+  if (
+    typeof high !== "number" ||
+    typeof low !== "number" ||
+    typeof heartRate !== "number"
+  ) {
     return res.status(400).send({ message: "Invalid data type" });
   }
 
@@ -81,12 +87,14 @@ app.post("/records", (req, res) => {
     ip,
   });
   saveData(data);
-  logger.info("/records POST", { high, low, heartRate, location }, ip, device);
+    logger.info("/records POST", { high, low, heartRate, location }, ip, device);
   res.status(201).send({ message: "Record added successfully" });
+  //   console.timeEnd("/records");
 });
 
 // 获取某timestamp之后的血压记录
 app.get("/records/after/:timestamp", (req, res) => {
+//   console.time("/records/after/:timestamp");
   logger.info("/records/after/:timestamp GET", req.params.timestamp);
   const { timestamp } = req.params;
   const data = loadData();
@@ -94,21 +102,25 @@ app.get("/records/after/:timestamp", (req, res) => {
     (record) => record.time > timestamp
   );
   res.json(filteredRecords);
+//   console.timeEnd("/records/after/:timestamp");
 });
 
 //    获取前x条血压记录
 app.get("/records/latest/:count", (req, res) => {
+//   console.time("/records/latest/:count");
   logger.info("/records/latest/:count GET", req.params.count);
   const { count } = req.params;
   const data = loadData();
   const latestRecords = data.records.slice(-count);
 
   res.json(latestRecords);
+//   console.timeEnd("/records/latest/:count");
 });
 
 // 修改血压记录
 // 对应项若无则沿用原值
 app.put("/records/:timestamp", (req, res) => {
+//   console.time("/records/:timestamp");
   const { timestamp } = req.params;
   const { high, low, heartRate, remark, location } = req.body;
   logger.info("/records/:timestamp PUT", req.params.timestamp, req.body);
@@ -128,10 +140,12 @@ app.put("/records/:timestamp", (req, res) => {
   };
   saveData(data);
   res.send({ message: "Record updated successfully" });
+//   console.timeEnd("/records/:timestamp");
 });
 
 // 删除血压记录
 app.delete("/records/:id", (req, res) => {
+//   console.time("/records/:id");
   const { id } = req.params;
   logger.info("/records/:id DELETE", id);
   const data = loadData();
@@ -144,14 +158,15 @@ app.delete("/records/:id", (req, res) => {
   saveData(data);
 
   res.send({ message: "Record deleted successfully" });
+//   console.timeEnd("/records/:id");
 });
 
 // vue静态资源
 app.use(express.static(path.join(__dirname, "dist")));
 // 其余非/records的请求返回index.html
-app.get(/^(?!\/records).*/, (req, res) =>
-  res.sendFile(path.join(__dirname, "dist", "index.html"))
-);
+app.get(/^(?!\/records).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 // 全局错误处理
 app.use((err, req, res, next) => {
